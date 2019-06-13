@@ -40,12 +40,6 @@ function createWindow() {
     })
 }
 
-function changeProgressbarText(texto) {
-    if (progressBar) return
-
-    progressBar.text = texto
-}
-
 function showProgressbar(texto) {
     if (progressBar) return
 
@@ -85,10 +79,6 @@ function setProgressbarCompleted() {
 
 ipcMain.on('show-progressbar', (event, texto) => {
     showProgressbar(texto)
-})
-
-ipcMain.on('change-progressbartext', (event, texto) => {
-    changeProgressbarText(texto)
 })
 
 ipcMain.on('set-progressbar-completed', setProgressbarCompleted)
