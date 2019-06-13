@@ -7,7 +7,7 @@ let logPath = ''
 if (process.env.NODE_ENV === 'production')
     logPath = path.join(__dirname, '../../../../')
 else if (process.env.NODE_ENV === 'development')
-    logPath = path.join(__dirname, '../../log/')
+    logPath = path.join(__dirname, '../../')
 
 const log_file = fs.createWriteStream(path.join(logPath, 'debug.log'), {
     flags: 'w'

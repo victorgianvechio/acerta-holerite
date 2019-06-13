@@ -10,9 +10,9 @@ Pressionar **ctrl + p** para abrir o DevTools
 
 Disponível na raiz da aplicação
 
-_debug.log_ número página e o texto extraído
+**_debug.log_** número da página e o texto extraído
 
-_pdf.log_ primeira página do pdf
+**_pdf.log_** primeira página do pdf
 
 ## Build
 
