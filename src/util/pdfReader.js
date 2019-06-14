@@ -8,6 +8,7 @@ const hummus = require('hummus')
 const path = require('path')
 const fs = require('fs')
 const log = require('./logger.js')
+const ipc = require('electron').ipcRenderer
 
 let fieldName = 'Sal.Fam.'
 let fileName = ''
@@ -40,9 +41,18 @@ const proccessPDF = (filePath, outputPath) => {
             if (err) reject(err)
 
             if (pages && pages.length >= 2) {
+                ipc.send(
+                    'show-progressbar',
+                    'Dividindo e renomeando arquivos',
+                    false,
+                    pages.length
+                )
+
                 log.pdf(pages[1])
 
                 for (let i = 0; i < pages.length; i++) {
+                    ipc.send('progressbar-next')
+
                     posName = pages[i].indexOf(fieldName) + fieldName.length
                     fileName = pages[i]
                         .trim()

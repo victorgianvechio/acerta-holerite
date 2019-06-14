@@ -40,13 +40,16 @@ function createWindow() {
     })
 }
 
-function showProgressbar(texto) {
+function showProgressbar(texto, isIndeterminate, maxValue) {
     if (progressBar) return
 
     progressBar = new ProgressBar({
+        indeterminate: isIndeterminate,
         title: 'Acerta Holerite',
         text: texto,
         detail: 'Aguarde...',
+        initialValue: 0,
+        maxValue: maxValue,
         options: {
             closeOnComplete: false
         },
@@ -65,20 +68,28 @@ function showProgressbar(texto) {
         }
     })
 
-    progressBar.on('completed', function() {
+    progressBar.on('completed', () => {
         //progressBar.detail = 'Task completed. Exiting...'
         progressBar = null
+    })
+
+    progressBar.on('progress', function(value) {
+        progressBar.detail = `Processando ${value} de ${
+            progressBar.getOptions().maxValue
+        }...`
     })
 }
 
 function setProgressbarCompleted() {
-    if (progressBar) {
-        progressBar.setCompleted()
-    }
+    if (progressBar) progressBar.setCompleted()
 }
 
-ipcMain.on('show-progressbar', (event, texto) => {
-    showProgressbar(texto)
+ipcMain.on('show-progressbar', (event, texto, isIndeterminate, maxValue) => {
+    showProgressbar(texto, isIndeterminate, maxValue)
+})
+
+ipcMain.on('progressbar-next', event => {
+    if (progressBar) progressBar.value += 1
 })
 
 ipcMain.on('set-progressbar-completed', setProgressbarCompleted)

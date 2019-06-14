@@ -8,7 +8,7 @@ const generateFile = async ($, remote) => {
     let outputPath = $('#outputPath').val()
     let filePath = $('#filePath').val()
 
-    ipc.send('show-progressbar', 'Dividindo e renomeando arquivos')
+    //ipc.send('show-progressbar', 'Dividindo e renomeando arquivos')
 
     await pdf
         .proccessPDF(filePath, outputPath)
