@@ -2,6 +2,11 @@
 
 Divide e renomeia os holerites a partir de um arquivo _.pdf_
 
+## Configurar .env
+
+**FIELD_NAME** o texto que antecede a informação a ser extraída
+**QTDE_CHAR** quantidade de caracteres após o **FIELD_NAME** usada para renomrar os _.pdf_
+
 ## Ferramenta de Desenvolvedor
 
 **ctrl + p** para abrir o DevTools
