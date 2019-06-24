@@ -2,17 +2,17 @@
 
 Divide e renomeia os holerites a partir de um arquivo _.pdf_
 
-## Configurar .env
+## :key: Configurar .env
 
 **FIELD_NAME** o texto que antecede a informação a ser extraída
 
-**QTDE_CHAR** quantidade de caracteres após o **FIELD_NAME** usada para renomrar os _.pdf_
+**QTDE_CHAR** quantidade de caracteres após o **FIELD_NAME** usada para renomerar os arquivos
 
-## Ferramenta de Desenvolvedor
+## :wrench: Ferramenta de Desenvolvedor
 
-**ctrl + p** para abrir o DevTools
+**CTRL + p** para abrir o _DevTools_
 
-## Logs :page_facing_up: :hammer:
+## :page_facing_up: Logs
 
 Disponível na pasta **logs** da aplicação
 
@@ -20,13 +20,13 @@ Disponível na pasta **logs** da aplicação
 
 **_pdf.log_** primeira página do pdf
 
-## Build :building_construction:
+## :hammer: Build
 
 ```sh
 npm run build
 ```
 
-## Corrigir erro de versão do NodeJS :wrench:
+## :wrench: Corrigir erro de versão do NodeJS
 
 excluir **package-lock.json** e a pasta **node_modules**
 
