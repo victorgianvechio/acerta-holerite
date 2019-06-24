@@ -1,14 +1,18 @@
+if (process.env.NODE_ENV == undefined) process.env.NODE_ENV = 'production'
+
 const { app, BrowserWindow, globalShortcut, ipcMain } = require('electron')
 const url = require('url')
 const path = require('path')
 const ProgressBar = require('electron-progressbar')
+
+require('./scripts/configApp.js')
 
 let mainWindow = ''
 let progressBar = ''
 
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width: 460, // 460
+        width: process.env.NODE_ENV === 'production' ? 460 : 1300,
         height: 420, // 420
         show: false,
         webPreferences: {
@@ -21,7 +25,9 @@ function createWindow() {
     })
 
     //mainWindow.loadFile('index.html')
-    //mainWindow.webContents.openDevTools()
+
+    if (process.env.NODE_ENV !== 'production')
+        mainWindow.webContents.openDevTools()
 
     mainWindow.loadURL(
         url.format({
@@ -35,7 +41,7 @@ function createWindow() {
         mainWindow.show()
     })
 
-    mainWindow.on('closed', function() {
+    mainWindow.on('closed', () => {
         mainWindow = null
     })
 }
@@ -73,7 +79,7 @@ function showProgressbar(texto, isIndeterminate, maxValue) {
         progressBar = null
     })
 
-    progressBar.on('progress', function(value) {
+    progressBar.on('progress', value => {
         progressBar.detail = `Processando ${value} de ${
             progressBar.getOptions().maxValue
         }...`
@@ -101,14 +107,10 @@ app.on('ready', () => {
     })
 })
 
-app.on('window-all-closed', function() {
-    if (process.platform !== 'darwin') {
-        app.quit()
-    }
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit()
 })
 
-app.on('activate', function() {
-    if (mainWindow === null) {
-        createWindow()
-    }
+app.on('activate', () => {
+    if (mainWindow === null) createWindow()
 })

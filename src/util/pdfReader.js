@@ -11,21 +11,40 @@ const log = require('./logger.js')
 const ipc = require('electron').ipcRenderer
 
 let fieldName = 'Sal.Fam.'
+let qtdeChar = 6
 let fileName = ''
 let posName = 0
-let qtdeChar = 8
+let pdfLog = ''
 
 // Deleta os arquivos da pasta
-async function deleteFiles() {
+const deleteFiles = async () => {
     await fs.readdirSync(outputFolder).filter(file => {
         fs.unlinkSync(path.join(outputFolder, file))
     })
 }
 
-// fieldName = Texto próximo a informação que quer extrair
+// Remove todos os espaços e quebras de linhas do pdf
+// Disponível em logs/pdf.log
+const formatPDF = async page => {
+    return new Promise((resolve, reject) => {
+        let pdf = page
+        let spaces =
+            '                                                                                   '
+
+        while (spaces.length > 1) {
+            pdf = pdf.split(spaces).join(' ')
+            spaces = spaces.slice(0, -1)
+        }
+        pdf = pdf.replace(/\r?\n|\r/g, '')
+        resolve(pdf)
+    })
+}
+
+// fieldName = Texto que antecede a informação que quer extrair
 // posName = posição do fieldName dentro do PDF
 // qtdeChar = quantidade de caracteres após o fieldName para achar a
 // informação que vai no nome do arquivo
+// fileName = Texto extraído que sera o nome do arquivo .pdf
 
 // Configurar apenas o fieldName e a qtdeChar
 // Verificar a pasta /log após o processamento
@@ -37,30 +56,26 @@ const proccessPDF = (filePath, outputPath) => {
     let pdfWriter = ''
 
     return new Promise((resolve, reject) => {
-        extract(sourcePDF, (err, pages) => {
+        extract(sourcePDF, async (err, pages) => {
             if (err) reject(err)
 
             if (pages && pages.length >= 2) {
-                ipc.send(
+                await ipc.send(
                     'show-progressbar',
                     'Dividindo e renomeando arquivos',
                     false,
                     pages.length
                 )
 
-                log.pdf(pages[1])
-
                 for (let i = 0; i < pages.length; i++) {
-                    ipc.send('progressbar-next')
+                    pdfLog = await formatPDF(pages[i])
 
-                    posName = pages[i].indexOf(fieldName) + fieldName.length
-                    fileName = pages[i]
-                        .trim()
-                        .substring(posName, posName + qtdeChar)
+                    posName = pdfLog.indexOf(fieldName) + (fieldName.length + 1)
+                    fileName = pdfLog.substring(posName, posName + qtdeChar)
 
-                    log.debug(`page${i + 1} - ${fileName.trim()}.pdf`)
+                    await log.debug(`page ${i + 1}  -\t ${fileName.trim()}.pdf`)
 
-                    if (fileName.trim().length === 6) {
+                    if (fileName.trim().length === qtdeChar) {
                         pdfWriter = hummus.createWriter(
                             path.join(outputFolder, `${fileName.trim()}.pdf`)
                         )
@@ -71,8 +86,10 @@ const proccessPDF = (filePath, outputPath) => {
                         pdfWriter.end()
                     } else {
                         mensagem = 'Inconsistência encontrada!'
+                        log.debug('Texto extraído menor que o tamanho definido')
                         reject(mensagem)
                     }
+                    await ipc.send('progressbar-next')
                 }
                 resolve(mensagem)
             } else {
@@ -82,6 +99,8 @@ const proccessPDF = (filePath, outputPath) => {
                 )
                 reject(mensagem)
             }
+            pdfLog = await formatPDF(pages[0])
+            log.pdf(pdfLog)
         })
     })
 }

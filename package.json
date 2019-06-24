@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "electron-progressbar": "^1.2.0",
+        "electron-root-path": "^1.0.9",
         "hummus": "^1.0.104",
         "jquery": "^3.4.1",
         "path": "^0.12.7",

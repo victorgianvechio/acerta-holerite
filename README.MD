@@ -4,11 +4,11 @@ Divide e renomeia os holerites a partir de um arquivo _.pdf_
 
 ## Ferramenta de Desenvolvedor
 
-Pressionar **ctrl + p** para abrir o DevTools
+**ctrl + p** para abrir o DevTools
 
 ## Logs
 
-Disponível na raiz da aplicação
+Disponível na pasta **logs** da aplicação
 
 **_debug.log_** número da página e o texto extraído
 
