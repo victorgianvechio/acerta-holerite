@@ -2,7 +2,7 @@
 
 Divide e renomeia os holerites a partir de um arquivo _.pdf_
 
-## Configurar .env
+## :key: Configurar .env
 
 **FIELD_NAME** o texto que antecede a informação a ser extraída
 
@@ -20,7 +20,7 @@ Disponível na pasta **logs** da aplicação
 
 **_pdf.log_** primeira página do pdf
 
-## :building_construction: Build 
+## :hammer: Build 
 
 ```sh
 npm run build
