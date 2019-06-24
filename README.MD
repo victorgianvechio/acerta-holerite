@@ -6,11 +6,11 @@ Divide e renomeia os holerites a partir de um arquivo _.pdf_
 
 **FIELD_NAME** o texto que antecede a informação a ser extraída
 
-**QTDE_CHAR** quantidade de caracteres após o **FIELD_NAME** usada para renomerar os _.pdf's_
+**QTDE_CHAR** quantidade de caracteres após o **FIELD_NAME** usada para renomerar os arquivos
 
 ## :wrench: Ferramenta de Desenvolvedor
 
-**CTRL + p** para abrir o DevTools
+**CTRL + p** para abrir o _DevTools_
 
 ## :page_facing_up: Logs  
 
@@ -26,7 +26,7 @@ Disponível na pasta **logs** da aplicação
 npm run build
 ```
 
-## :hammer::wrench: Corrigir erro de versão do NodeJS 
+## :wrench: Corrigir erro de versão do NodeJS 
 
 excluir **package-lock.json** e a pasta **node_modules**
 
