@@ -59,6 +59,8 @@ const proccessPDF = (filePath, outputPath) => {
         extract(sourcePDF, async (err, pages) => {
             if (err) reject(err)
 
+            log.create()
+
             if (pages && pages.length >= 2) {
                 await ipc.send(
                     'show-progressbar',
