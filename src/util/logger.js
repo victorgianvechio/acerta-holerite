@@ -13,20 +13,6 @@ if (process.env.NODE_ENV === 'production')
 else if (process.env.NODE_ENV === 'development')
     logPath = path.join(projectPath.devPath, '/logs')
 
-// const logFile = fs.createWriteStream(
-//     path.join(logPath, `debug-${getDate()}.log`),
-//     {
-//         flags: 'w'
-//     }
-// )
-
-// const pdfFile = fs.createWriteStream(
-//     path.join(logPath, `pdf-${getDate()}.log`),
-//     {
-//         flags: 'w'
-//     }
-// )
-
 const create = () => {
     logFile = fs.createWriteStream(
         path.join(logPath, `debug-${getDate()}.log`),
@@ -41,15 +27,15 @@ const create = () => {
 }
 
 // Gera arquivo de Log com nome extraído
-const debug = d => {
-    logFile.write(util.format(d) + '\n')
-    logStdout.write(util.format(d) + '\n')
+const debug = text => {
+    logFile.write(`${util.format(text)}\n`)
+    logStdout.write(`${util.format(text)}\n`)
 }
 
 // Gera arquivo com o PDF extraído
-const pdf = d => {
-    pdfFile.write(util.format(d) + '\n')
-    logStdout.write(util.format(d) + '\n')
+const pdf = text => {
+    pdfFile.write(`${util.format(text)}\n`)
+    logStdout.write(`${util.format(text)}\n`)
 }
 
 function getDate() {

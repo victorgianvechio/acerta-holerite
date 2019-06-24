@@ -10,8 +10,8 @@ const fs = require('fs')
 const log = require('./logger.js')
 const ipc = require('electron').ipcRenderer
 
-let fieldName = 'Sal.Fam.'
-let qtdeChar = 6
+let fieldName = process.env.FIELD_NAME
+let qtdeChar = Number(process.env.QTDE_CHAR)
 let fileName = ''
 let posName = 0
 let pdfLog = ''
@@ -45,9 +45,6 @@ const formatPDF = async page => {
 // qtdeChar = quantidade de caracteres após o fieldName para achar a
 // informação que vai no nome do arquivo
 // fileName = Texto extraído que sera o nome do arquivo .pdf
-
-// Configurar apenas o fieldName e a qtdeChar
-// Verificar a pasta /log após o processamento
 
 const proccessPDF = (filePath, outputPath) => {
     let sourcePDF = filePath
@@ -88,7 +85,9 @@ const proccessPDF = (filePath, outputPath) => {
                         pdfWriter.end()
                     } else {
                         mensagem = 'Inconsistência encontrada!'
-                        log.debug('Texto extraído menor que o tamanho definido')
+                        log.debug(
+                            'Texto extraído diferente do tamanho definido'
+                        )
                         reject(mensagem)
                     }
                     await ipc.send('progressbar-next')

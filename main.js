@@ -6,6 +6,7 @@ const path = require('path')
 const ProgressBar = require('electron-progressbar')
 
 require('./scripts/configApp.js')
+require('dotenv').config()
 
 let mainWindow = ''
 let progressBar = ''

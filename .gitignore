@@ -7,9 +7,6 @@ node_modules/
 # Build directorie
 build/
 
-# Environment files
-*.env
-
 # Text files
 *.txt
 
