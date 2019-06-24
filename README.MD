@@ -12,7 +12,7 @@ Divide e renomeia os holerites a partir de um arquivo _.pdf_
 
 **ctrl + p** para abrir o DevTools
 
-## Logs
+## Logs :page_facing_up: :hammer:
 
 Disponível na pasta **logs** da aplicação
 
@@ -20,13 +20,13 @@ Disponível na pasta **logs** da aplicação
 
 **_pdf.log_** primeira página do pdf
 
-## Build
+## Build :building_construction:
 
 ```sh
 npm run build
 ```
 
-## Corrigir erro de versão do NodeJS
+## Corrigir erro de versão do NodeJS :wrench:
 
 excluir **package-lock.json** e a pasta **node_modules**
 
