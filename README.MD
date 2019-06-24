@@ -8,11 +8,11 @@ Divide e renomeia os holerites a partir de um arquivo _.pdf_
 
 **QTDE_CHAR** quantidade de caracteres após o **FIELD_NAME** usada para renomrar os _.pdf_
 
-## Ferramenta de Desenvolvedor
+## :wrench: Ferramenta de Desenvolvedor
 
 **ctrl + p** para abrir o DevTools
 
-## Logs :page_facing_up: :hammer:
+## :page_facing_up: Logs  
 
 Disponível na pasta **logs** da aplicação
 
@@ -20,13 +20,13 @@ Disponível na pasta **logs** da aplicação
 
 **_pdf.log_** primeira página do pdf
 
-## Build :building_construction:
+## :building_construction: Build 
 
 ```sh
 npm run build
 ```
 
-## Corrigir erro de versão do NodeJS :wrench:
+## :hammer: Corrigir erro de versão do NodeJS 
 
 excluir **package-lock.json** e a pasta **node_modules**
 
