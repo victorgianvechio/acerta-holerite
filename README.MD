@@ -26,7 +26,7 @@ Disponível na pasta **logs** da aplicação
 npm run build
 ```
 
-## :hammer: Corrigir erro de versão do NodeJS 
+## :hammer::wrench: Corrigir erro de versão do NodeJS 
 
 excluir **package-lock.json** e a pasta **node_modules**
 
