@@ -6,11 +6,11 @@ Divide e renomeia os holerites a partir de um arquivo _.pdf_
 
 **FIELD_NAME** o texto que antecede a informação a ser extraída
 
-**QTDE_CHAR** quantidade de caracteres após o **FIELD_NAME** usada para renomrar os _.pdf_
+**QTDE_CHAR** quantidade de caracteres após o **FIELD_NAME** usada para renomerar os _.pdf's_
 
 ## :wrench: Ferramenta de Desenvolvedor
 
-**ctrl + p** para abrir o DevTools
+**CTRL + p** para abrir o DevTools
 
 ## :page_facing_up: Logs  
 
