@@ -7,11 +7,14 @@ const generateFile = async ($, remote) => {
     let options = ''
     let outputPath = $('#outputPath').val()
     let filePath = $('#filePath').val()
+    let layout = $('#layout').val()
 
-    //ipc.send('show-progressbar', 'Dividindo e renomeando arquivos')
+    console.log(layout)
+    console.log(process.env[`FIELD_NAME_${layout}`])
+    console.log(Number(process.env[`QTDE_CHAR_${layout}`]))
 
     await pdf
-        .proccessPDF(filePath, outputPath)
+        .proccessPDF(filePath, outputPath, layout)
         .then(v => {
             options = {
                 type: 'info',
@@ -34,8 +37,23 @@ const generateFile = async ($, remote) => {
     remote.dialog.showMessageBox(null, options)
 }
 
+function setLayouts() {
+    let layouts = process.env.LAYOUTS.split(',')
+    let selected = 0
+
+    layouts.forEach(item => {
+        if ((selected = 0)) {
+            $('#layout').append(
+                `<option selected value="${item}">${item}</option>`
+            )
+            selected = 1
+        } else $('#layout').append(`<option value="${item}">${item}</option>`)
+    })
+}
+
 async function configure(remote) {
-    let winrarExist = await cfg.checkWinrar()
+    let winrarx86 = await cfg.checkWinrarx86()
+    let winrar = await cfg.checkWinrar()
     let envExist = await cfg.checkEnv()
     let folderExist = await cfg.checkFolder()
 
@@ -46,7 +64,14 @@ async function configure(remote) {
         detail: ''
     }
 
-    if (!winrarExist) {
+    console.log('winrar:', winrar)
+    console.log('winrarx86:', winrarx86)
+    console.log(
+        'winrarPath: ',
+        winrar ? '%ProgramFiles%' : '%ProgramFiles(x86)%'
+    )
+
+    if (!winrar && !winrarx86) {
         options.type = 'warning'
         options.message = 'Necessário instalar Winrar.'
         remote.dialog.showMessageBox(null, options)
@@ -59,7 +84,7 @@ async function configure(remote) {
     if (!folderExist) {
         options.detail += '- Dependências instaladas.\n'
         await ipc.send('show-progressbar', 'Instalando dependências')
-        await cfg.extract()
+        await cfg.extract(winrar ? '%ProgramFiles%' : '%ProgramFiles(x86)%')
         await timeout(3000)
         await ipc.send('set-progressbar-completed')
     }
@@ -157,5 +182,7 @@ module.exports = ($, remote) => {
         $('#btnConfig').click(() => {
             configure(remote)
         })
+
+        setLayouts()
     })
 }

@@ -13,7 +13,7 @@ let progressBar = ''
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: process.env.NODE_ENV === 'production' ? 460 : 1300,
-        height: 420, // 420
+        height: 480, // 480
         show: false,
         webPreferences: {
             nodeIntegration: true

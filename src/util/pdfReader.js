@@ -10,8 +10,8 @@ const fs = require('fs')
 const log = require('./logger.js')
 const ipc = require('electron').ipcRenderer
 
-let fieldName = process.env.FIELD_NAME
-let qtdeChar = Number(process.env.QTDE_CHAR)
+let fieldName = ''
+let qtdeChar = ''
 let fileName = ''
 let posName = 0
 let pdfLog = ''
@@ -40,17 +40,14 @@ const formatPDF = async page => {
     })
 }
 
-// fieldName = Texto que antecede a informação que quer extrair
-// posName = posição do fieldName dentro do PDF
-// qtdeChar = quantidade de caracteres após o fieldName para achar a
-// informação que vai no nome do arquivo
-// fileName = Texto extraído que sera o nome do arquivo .pdf
-
-const proccessPDF = (filePath, outputPath) => {
+const proccessPDF = (filePath, outputPath, layout) => {
     let sourcePDF = filePath
     let outputFolder = outputPath
     let mensagem = ''
     let pdfWriter = ''
+
+    fieldName = process.env[`FIELD_NAME_${layout}`]
+    qtdeChar = Number(process.env[`QTDE_CHAR_${layout}`])
 
     return new Promise((resolve, reject) => {
         extract(sourcePDF, async (err, pages) => {

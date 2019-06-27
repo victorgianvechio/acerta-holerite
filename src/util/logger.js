@@ -3,6 +3,7 @@ const util = require('util')
 const path = require('path')
 const projectPath = require('./projectPath.js')
 const logStdout = process.stdout
+const date = require('date-pt-br')
 
 let logPath = ''
 let logFile = ''
@@ -15,15 +16,18 @@ else if (process.env.NODE_ENV === 'development')
 
 const create = () => {
     logFile = fs.createWriteStream(
-        path.join(logPath, `debug-${getDate()}.log`),
+        path.join(logPath, `debug-${date.getDate('-')}.log`),
         {
             flags: 'w'
         }
     )
 
-    pdfFile = fs.createWriteStream(path.join(logPath, `pdf-${getDate()}.log`), {
-        flags: 'w'
-    })
+    pdfFile = fs.createWriteStream(
+        path.join(logPath, `pdf-${date.getDate('-')}.log`),
+        {
+            flags: 'w'
+        }
+    )
 }
 
 // Gera arquivo de Log com nome extraído
@@ -36,18 +40,6 @@ const debug = text => {
 const pdf = text => {
     pdfFile.write(`${util.format(text)}\n`)
     logStdout.write(`${util.format(text)}\n`)
-}
-
-function getDate() {
-    let date = new Date()
-
-    let day = date.getDate()
-    let month = date.getMonth() + 1 // 0-11 (zero=janeiro)
-    let year = date.getFullYear()
-
-    return `${day}-${
-        month.toString().length == 1 ? '0' + month : month
-    }-${year}`
 }
 
 module.exports = { debug, pdf, create }

@@ -5,8 +5,8 @@
     "private": false,
     "main": "main.js",
     "scripts": {
-        "start": "set NODE_ENV=development&& electron .",
-        "build": "set NODE_ENV=production&& electron-packager . --out=./build/ --overwrite --prune --overwrite --platform=win32 --arch=x64 --icon=./app/assets/img/icon/pdf.ico --ignore=./gitignore --executableName=\"Acerta Holerite\" --version-string.ProductName=\"acerta-holerite\"",
+        "start": "set \"NODE_ENV=development\" && electron .",
+        "build": "set \"NODE_ENV=production\" && electron-packager . --out=./build/ --overwrite --prune --overwrite --platform=win32 --arch=x64 --icon=./app/assets/img/icon/pdf.ico --ignore=./gitignore --executableName=\"Acerta Holerite\" --version-string.ProductName=\"acerta-holerite\"",
         "lint": "./node_modules/.bin/eslint **/*.js",
         "lint-fix": "./node_modules/.bin/eslint **/*.js --fix",
         "rebuild": "./node_modules/.bin/electron-rebuild"
@@ -19,6 +19,7 @@
         "url": "https://github.com/victorgianvechio/acerta-holerite.git"
     },
     "dependencies": {
+        "date-pt-br": "^1.0.5",
         "dotenv": "^8.0.0",
         "electron-progressbar": "^1.2.0",
         "electron-root-path": "^1.0.9",

@@ -30,27 +30,48 @@ const checkFolder = () => {
     return result
 }
 
-// Verifica se existe winrar instalado
+// Verifica se existe winrar instalado em Program Files
 const checkWinrar = () => {
     let result = false
 
-    let stdout = exec('cd "%ProgramFiles%\\WinRAR" && dir', err => {
-        if (err) console.error('Error checkWinrar', err)
-    })
+    try {
+        let stdout = exec('cd "%ProgramFiles%\\WinRAR" && dir', err => {
+            if (err) return result
+        })
+        stdout = stdout.toString('utf8').toLowerCase()
 
-    stdout = stdout.toString('utf8').toLowerCase()
+        if (stdout.indexOf('winrar.exe') == -1) result = false
+        else result = true
 
-    if (stdout.indexOf('winrar.exe') == -1) result = false
-    else result = true
+        return result
+    } catch (err) {
+        return result
+    }
+}
 
-    console.log('winrar:', result)
-    return result
+// Verifica se existe winrar instalado em Program Files (x86)
+const checkWinrarx86 = () => {
+    let result = false
+
+    try {
+        let stdout = exec('cd "%ProgramFiles(x86)%\\WinRAR" && dir', err => {
+            if (err) return result
+        })
+        stdout = stdout.toString('utf8').toLowerCase()
+
+        if (stdout.indexOf('winrar.exe') == -1) result = false
+        else result = true
+
+        return result
+    } catch (err) {
+        return result
+    }
 }
 
 // Extrai os arquivos necessários no diretório C:/Arquivos de Programas (x86)
-const extract = () => {
+const extract = path => {
     exec(
-        `"%ProgramFiles%\\WinRAR\\winrar.exe" x -ibck "${__dirname}\\xpdf-tools.rar" "C:\\Program Files (x86)"`,
+        `"${path}\\WinRAR\\winrar.exe" x -ibck "${__dirname}\\xpdf-tools.rar" "C:\\Program Files (x86)"`,
         err => {
             if (err) console.log('Error extract', err)
         }
@@ -70,6 +91,7 @@ const setEnv = () => {
 module.exports = {
     checkFolder: checkFolder,
     checkWinrar: checkWinrar,
+    checkWinrarx86: checkWinrarx86,
     checkEnv: checkEnv,
     extract: extract,
     setEnv: setEnv
