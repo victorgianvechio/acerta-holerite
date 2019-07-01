@@ -8,26 +8,30 @@ O arquivo .env é responsável pelas configurações utilizadas para extrair e r
 
 ### Variáveis
 
--   *LAYOUT*: identifica os layouts disponíveis que serão apresentados na tela. Os layouts devem ser separados por `','`.
+-   _LAYOUT_: identifica os layouts disponíveis que serão apresentados na tela. Os layouts devem ser separados por `','`.
 
--   *FIELD_NAME_<'LAYOUT'>*: para cada Layout deve criar um FIELD_NAME que representa o texto que antecede a informação a ser extraída para renomear os arquivos.
+-   *FIELD_NAME_<'LAYOUT'>*: para cada **LAYOUT** deve criar um **FIELD_NAME** que representa o texto que antecede a informação a ser extraída para renomear os arquivos.
 
 -   *QTDE_CHAR_<'LAYOUT'>*: quantidade de caracteres após o **FIELD_NAME** usado para renomear os arquivos.
+
+**OBS**: *QTDE_CHAR_<'LAYOUT'>* sem valor `""`, utiliza o nome do **LAYOUT** para renomar os arquivos.
 
 **Exemplo arquivo .env**
 
 ```sh
-FIELD_NAME_FUNCIONARIO="CODIGO"
-QTDE_CHAR_FUNCIONARIO=5
-FIELD_NAME_TELEFONE="TELEFONE"
+FIELD_NAME_FUNCIONARIO="Código:"
+QTDE_CHAR_FUNCIONARIO=5a
+FIELD_NAME_TELEFONE="Tel:"
 QTDE_CHAR_TELEFONE=9
-LAYOUTS="FUNCIONARIO,TELEFONE"
-
+FIELD_NAME_OUTRO=""
+LAYOUTS="Funcionario,Telefone,Outro"
 ```
 
-Com essas configurações dois layouts estarão disponível para selecionar: *FUNCIONARIO* e *TELEFONE*. 
-+ **FUNCIONARIO**: os arquivos serão renomeados com os próximos *5* caracteres após a palavra *CODIGO* encontrada no arquivo.
-+ **TELEFONE**: os arquivos serão renomeados com os próximos *9* caracteres após a palavra *TELEFONE* encontrada no arquivo.
+Com essas configurações dois layouts estarão disponível para selecionar: _FUNCIONARIO_, _TELEFONE_ e _OUTRO_.
+
+-   **FUNCIONARIO**: os arquivos serão renomeados com os próximos _5_ caracteres após a palavra _Código:_ encontrada no arquivo.
+-   **TELEFONE**: os arquivos serão renomeados com os próximos _9_ caracteres após a palavra _Tel:_ encontrada no arquivo.
+-   **OUTRO**: os arquivos serão renomeados com o nome do LAYOUT (_Outro_) + o número da página. **Ex**: _Outro_1.pdf_
 
 ## Ferramenta de Desenvolvedor
 
