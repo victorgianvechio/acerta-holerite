@@ -24,7 +24,7 @@ function createWindow() {
         icon: path.join(__dirname, '/app/assets/img/icon/pdf.ico')
     })
 
-    //mainWindow.loadFile('index.html')
+    // mainWindow.loadFile('index.html')
 
     if (process.env.NODE_ENV !== 'production')
         mainWindow.webContents.openDevTools()
@@ -75,7 +75,7 @@ function showProgressbar(texto, isIndeterminate, maxValue) {
     })
 
     progressBar.on('completed', () => {
-        //progressBar.detail = 'Task completed. Exiting...'
+        // progressBar.detail = 'Task completed. Exiting...'
         progressBar = null
     })
 

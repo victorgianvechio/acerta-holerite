@@ -46,8 +46,8 @@ const proccessPDF = (filePath, outputPath, layout) => {
     let mensagem = ''
     let pdfWriter = ''
 
-    fieldName = process.env[`FIELD_NAME_${layout}`]
-    qtdeChar = Number(process.env[`QTDE_CHAR_${layout}`])
+    fieldName = process.env[`FIELD_NAME_${layout.toUpperCase()}`]
+    qtdeChar = Number(process.env[`QTDE_CHAR_${layout.toUpperCase()}`])
 
     return new Promise((resolve, reject) => {
         extract(sourcePDF, async (err, pages) => {
@@ -67,7 +67,10 @@ const proccessPDF = (filePath, outputPath, layout) => {
                     pdfLog = await formatPDF(pages[i])
 
                     posName = pdfLog.indexOf(fieldName) + (fieldName.length + 1)
-                    fileName = pdfLog.substring(posName, posName + qtdeChar)
+                    fileName =
+                        fieldName.trim() === ''
+                            ? `${layout}_${i + 1}`
+                            : pdfLog.substring(posName, posName + qtdeChar)
 
                     await log.debug(`page ${i + 1}  -\t ${fileName.trim()}.pdf`)
 
@@ -81,20 +84,30 @@ const proccessPDF = (filePath, outputPath, layout) => {
                         })
                         pdfWriter.end()
                     } else {
-                        mensagem = 'Inconsistência encontrada!'
-                        log.debug(
-                            'Texto extraído diferente do tamanho definido'
-                        )
-                        reject(mensagem)
+                        if (fieldName.trim() === '') {
+                            pdfWriter = hummus.createWriter(
+                                path.join(outputFolder, `${fileName.trim()}.pdf`)
+                            )
+                            pdfWriter.appendPDFPagesFromPDF(sourcePDF, {
+                                type: hummus.eRangeTypeSpecific,
+                                specificRanges: [[i, i]]
+                            })
+                            pdfWriter.end()
+                        } else {
+                            mensagem = 'Inconsistência encontrada!'
+                            log.debug('Texto extraído diferente do tamanho definido')
+                            reject(mensagem)
+                        }
+                        // mensagem = 'Inconsistência encontrada!'
+                        // log.debug('Texto extraído diferente do tamanho definido')
+                        // reject(mensagem)
                     }
                     await ipc.send('progressbar-next')
                 }
                 resolve(mensagem)
             } else {
                 mensagem = 'Arquivo inválido.'
-                log.debug(
-                    'Arqivo corrompido, inválido ou possuí apenas uma página.'
-                )
+                log.debug('Arqivo corrompido, inválido ou possuí apenas uma página.')
                 reject(mensagem)
             }
             pdfLog = await formatPDF(pages[0])

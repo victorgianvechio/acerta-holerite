@@ -9,10 +9,6 @@ const generateFile = async ($, remote) => {
     let filePath = $('#filePath').val()
     let layout = $('#layout').val()
 
-    console.log(layout)
-    console.log(process.env[`FIELD_NAME_${layout}`])
-    console.log(Number(process.env[`QTDE_CHAR_${layout}`]))
-
     await pdf
         .proccessPDF(filePath, outputPath, layout)
         .then(v => {
@@ -28,8 +24,7 @@ const generateFile = async ($, remote) => {
                 type: 'error',
                 title: 'Acerta Holerite',
                 message: err,
-                detail:
-                    'Log gerado.\nEntrar em contato com o Desenvolvimento de Sistemas.'
+                detail: 'Log gerado.\nEntrar em contato com o Desenvolvimento de Sistemas.'
             }
         })
 
@@ -43,9 +38,7 @@ function setLayouts() {
 
     layouts.forEach(item => {
         if ((selected = 0)) {
-            $('#layout').append(
-                `<option selected value="${item}">${item}</option>`
-            )
+            $('#layout').append(`<option selected value="${item}">${item}</option>`)
             selected = 1
         } else $('#layout').append(`<option value="${item}">${item}</option>`)
     })
@@ -66,10 +59,7 @@ async function configure(remote) {
 
     console.log('winrar:', winrar)
     console.log('winrarx86:', winrarx86)
-    console.log(
-        'winrarPath: ',
-        winrar ? '%ProgramFiles%' : '%ProgramFiles(x86)%'
-    )
+    console.log('winrarPath: ', winrar ? '%ProgramFiles%' : '%ProgramFiles(x86)%')
 
     if (!winrar && !winrarx86) {
         options.type = 'warning'
@@ -90,16 +80,14 @@ async function configure(remote) {
     }
 
     if (!envExist) {
-        options.detail +=
-            '- Variável de ambiente criada.\n\nNecessário reiniciar a aplicação.'
+        options.detail += '- Variável de ambiente criada.\n\nNecessário reiniciar a aplicação.'
         await ipc.send('show-progressbar', 'Configurando variável de ambiente')
         await cfg.setEnv()
         await timeout(3000)
         await ipc.send('set-progressbar-completed')
     }
 
-    if (envExist && folderExist)
-        options.message = 'Parâmetros e configurações já realizadas.'
+    if (envExist && folderExist) options.message = 'Parâmetros e configurações já realizadas.'
 
     await timeout(500)
     await remote.dialog.showMessageBox(null, options)
