@@ -1,7 +1,7 @@
 {
     "name": "acerta-holerite",
-    "version": "1.0.0",
-    "description": "Organizador de holerites para layout Dataplace",
+    "version": "1.0.1",
+    "description": "Divide e renomeia arquivos PDF.",
     "private": false,
     "main": "main.js",
     "scripts": {
@@ -39,5 +39,10 @@
     "engines": {
         "node": ">=10.15.3",
         "npm": ">=6.4.1"
-    }
+    },
+    "keywords": [
+        "pdf",
+        "separator",
+        "rename"
+    ]
 }
