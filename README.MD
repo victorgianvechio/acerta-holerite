@@ -20,7 +20,7 @@ O arquivo .env é responsável pelas configurações utilizadas para extrair e r
 
 ```sh
 FIELD_NAME_FUNCIONARIO="Código:"
-QTDE_CHAR_FUNCIONARIO=5a
+QTDE_CHAR_FUNCIONARIO=5
 FIELD_NAME_TELEFONE="Tel:"
 QTDE_CHAR_TELEFONE=9
 FIELD_NAME_OUTRO=""
