@@ -1,12 +1,12 @@
-module.exports = ($, remote) => {
+module.exports = function($, remote) {
     $('#header').load('../../app/view/components/header.html')
 
-    $(document).ready(() => {
+    $(document).ready(function() {
         function getWindow() {
             return remote.BrowserWindow.getFocusedWindow()
         }
 
-        $('#btnCancel').click(() => {
+        $('#btnCancel').click(function() {
             getWindow().close()
         })
 
@@ -14,7 +14,7 @@ module.exports = ($, remote) => {
         //     getWindow().isMaximized() ? getWindow().restore() : getWindow().maximize();
         // });
 
-        $('#btnMinus').click(() => {
+        $('#btnMinus').click(function() {
             getWindow().minimize()
         })
     })

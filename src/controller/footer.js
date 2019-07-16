@@ -1,4 +1,4 @@
-module.exports = $ => {
+module.exports = function($) {
     $('#footer').load('../../app/view/components/footer.html')
 
     $(document).ready(function() {
